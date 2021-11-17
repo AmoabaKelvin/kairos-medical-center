@@ -1,0 +1,67 @@
+{% extends 'reception/base.html' %}
+
+{% block content %}
+
+
+{% if patients.count > 0 %}
+        
+<div class="shadow p-3 mb-5 bg-body rounded"><h3 style="text-align: center;">Today's DashBoard</h3></div>
+<div class="dashboard">
+    <table class="table table-bordered">
+        <thead class="table-success">
+        <tr>
+            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center">Age</th>
+            <th scope="col" class="text-center">Contact</th>
+            <th scope="col" class="text-center">Tests To Perform</th>
+            <th scope="col" class="text-center">Total Cost &#162</th>
+            {% if request.user.is_superuser %}
+                <th scope="col" class="text-center">Admitted By</th>
+            {% else %}
+            <th scope="col" class="text-center">Actions</th>
+            {% endif %}
+                
+        </tr>
+        </thead>
+        <tbody>
+            
+            {% for patient in patients %}
+                <tr class="text-center">
+                    <td>{{patient.patients_name}}</td>
+                    <td>{{patient.patients_age}}</td>
+                    <!--Added a leading zero since the numbers dont start with a zero-->
+                    <td>{{patient.patients_contact}}</td>
+                    
+                    {% comment %}
+                        We call the list_of_tests method from the Patient 
+                        model.
+                    {% endcomment %}
+                        
+                    <td>{{patient.list_of_tests|join:','}}</td>
+                    <td>{{patient.get_total_test_cost}}</td>
+                    
+                    {% if request.user.is_superuser %}
+                        <td>{{patient.receptionist}}</td>
+                    {% else %}
+                    <td>
+                        <a href="{% url 'info' patient.id%}">
+                            <button type="button" class="btn btn-secondary btn-sm">Info</button>
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>      
+            {% endfor %}
+        
+        </tbody>
+    </table>
+
+</div>
+
+{% else %}
+    <h1 style="color: brown;">Nothing Here. No Patient Has Been Recorded</h1>
+{% endif %}
+    
+{% endblock content %}
+<script>
+    
+</script>
