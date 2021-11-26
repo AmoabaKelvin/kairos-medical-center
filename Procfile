@@ -1,0 +1,1 @@
+web: gunicorn kairos_medical_center.wsgi --log-file -

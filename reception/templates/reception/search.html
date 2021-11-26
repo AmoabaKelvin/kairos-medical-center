@@ -1,0 +1,61 @@
+{% extends 'reception/base.html' %}
+
+{% block content %}
+<br><br><br>
+<h1 style="font-weight: bolder;text-align: center; text-decoration: underline;">Search Results</h1>
+{% if patients.count > 0 %}
+    
+<table class="table table-bordered">
+    <thead class="table-success">
+    <tr>
+        <th scope="col" class="text-center">Name</th>
+        <th scope="col" class="text-center">Age</th>
+        <th scope="col" class="text-center">Sex</th>
+        <th scope="col" class="text-center">Contact</th>
+        <th scope="col" class="text-center">Email</th>
+        
+        {% if request.user.is_receptionist %}
+        <th scope="col" class="text-center">Actions</th>    
+        {% endif %}
+        <!--<th scope="col" class="text-center">Actions</th>-->
+    </tr>
+    </thead>
+    <tbody>
+        
+        {% for patient in patients %}
+            <tr class="text-center">
+                <td>{{patient.patients_name}}</td>
+                <td>{{patient.patients_age}}</td>
+                <td>{{patient.patients_sex}}</td>
+                <!--Added a leading zero since the numbers dont start with a zero-->
+                <td>{{patient.patients_contact}}</td>
+                
+                {% comment %}
+                    We call the list_of_tests method from the Patient 
+                    model.
+                {% endcomment %}
+                    
+                <td>{{patient.email_address}}</td>
+                
+                {% if request.user.is_receptionist %}
+                <td>
+                    <a href="{% url 'info' patient.id%}">
+                        <button type="button" class="btn btn-secondary btn-sm">Update Info</button>
+                    </a>
+                </td>    
+                {% endif %}
+                    
+                
+                
+            </tr>      
+        {% endfor %}
+    
+    </tbody>
+</table>
+{% else %}
+    <h1>No Patient found.</h1>
+{% endif %}
+
+        
+{% endblock content %}
+    

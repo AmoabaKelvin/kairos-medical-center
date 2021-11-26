@@ -1,0 +1,60 @@
+{% extends 'reception/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+{% if messages %}
+
+{% for message in messages %}        
+<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>    
+{% endfor %}
+{% endif %}
+    
+
+<table class="table table-bordered">
+    <h1 style="text-align: center;">Patient Information</h1>
+    <thead>
+    <tr>
+        <th scope="col" class="text-center">Name</th>
+        <th scope="col" class="text-center">Age</th>
+        <th scope="col" class="text-center">Contact</th>
+        <th scope="col" class="text-center">Email</th>
+        <th scope="col" class="text-center">Date Added</th>
+        <!--<th scope="col" class="text-center">Actions</th>-->
+    </tr>
+    </thead>
+    <tbody>
+            <tr class="text-center">
+                <td>{{patient.patients_name}}</td>
+                <td>{{patient.patients_age}}</td>
+                <!--Added a leading zero since the numbers dont start with a zero-->
+                <td>0{{patient.patients_contact}}</td>
+                
+                {% comment %}
+                    We call the list_of_tests method from the Patient 
+                    model.
+                {% endcomment %}
+                    
+                <td>{{patient.email_address}}</td>
+                <td>{{patient.date_added}}</td>
+                
+            </tr>      
+    
+    </tbody>
+</table>
+
+<!-- Edit patient information form starts here. -->
+<div class="container">
+<form method="POST">
+    <h1>Update Patient Information</h1>
+    {% csrf_token %}
+    {{form|crispy}} <hr>
+    <button type="submit" class="btn btn-danger">Update</button>    
+    <hr>
+</form>
+</div>
+{% endblock content %}
+    

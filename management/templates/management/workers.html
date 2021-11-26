@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+
+{% block cards %}
+{% endblock cards %}
+    
+
+
+{% block table_title %}
+    Workers 
+{% endblock table_title %}    
+
+{% block table_headers %}                                                
+<th>First Name</th>
+<th>Last Name</th>
+<th>Username</th>
+<th>Email Address</th>
+{% endblock table_headers %}
+
+
+{% block table_content %}
+    
+    {% for worker in workers %}
+    <tr>
+        <td>{{worker.first_name}}</td>
+        <td>{{worker.last_name}}</td>
+        <td>{{worker.username}}</td>
+        <td>{{worker.email}}</td>
+    </tr>
+    {% endfor %}
+        
+{% endblock table_content %}
+    

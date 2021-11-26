@@ -1,0 +1,60 @@
+{% extends 'reception/base.html' %}
+
+{% block content %}
+    
+
+    
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        
+        {% block table_title %}
+            DataTable Example
+        {% endblock table_title %}
+            
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    
+                    {% block table_headers %}
+                        
+                    {% endblock table_headers %}
+                        
+                    <!-- <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Age</th>
+                    <th>Start date</th>
+                    <th>Salary</th> -->
+                </tr>
+            </thead>
+            <!-- <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Age</th>
+                    <th>Start date</th>
+                    <th>Salary</th>
+                </tr>
+            </tfoot> -->
+            <tbody>
+                    {% block table_content %}
+                        
+                    {% endblock table_content %}
+                        
+                    <!-- <td>Tiger Nixon</td>
+                    <td>System Architect</td>
+                    <td>Edinburgh</td>
+                    <td>61</td>
+                    <td>2011/04/25</td>
+                    <td>$320,800</td> -->
+            
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

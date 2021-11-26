@@ -1,0 +1,99 @@
+{% extends 'reception/base.html' %}
+
+{% block content %}
+<!-- <div class="shadow p-3 mb-5 bg-body rounded">
+    <h3 style="text-align: center;">Summary</h3>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="table-success">
+        <tr>
+            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center">Number Done</th>
+            <th scope="col" class="text-center">Total Cost &#162</th>
+        </tr>
+        </thead>
+        <tbody>
+            {# loop through the dictionary sent to the template then print the #}
+            {# name of the test along with the number of occurence as well as #}
+            {# the total price. #}
+
+            <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Current Sales Summary
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Total Number</th>
+                                            <th>Total Cost</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for test, details in results.items %}
+                                        <tr>
+                                            <td>{{test}}</td>
+                                            <td>{{details|first}}</td>
+                                            <td>{{details|last}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+        </tbody>
+    </table>
+</div> -->
+<!-- <div class="form-horizontal">
+    <div class="form-group row">
+        <div class="mx-auto row mb-4" style="width: 300px;">
+            <label class="control-label col-sm-2">Select Date:</label>
+            <input type="date" name="date-picker" id="date" class="form-control" width="50px">
+        </div>
+    </div>
+</div> -->
+
+<form method="GET" action="{% url 'summary' %}">
+    <div class="form-group row mx-auto mb-4" style="width: 700px;">
+      <label for="datepicker" class="col-sm-2 col-form-label"><b>Select Date</b></label>
+      <!-- <div class="col-sm-10 mx-auto"> -->
+        <input type="date" class="form-control" id="datepicker" placeholder="Date" name="date-picker">
+        <div class="col-auto mt-1 mx-auto">
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+          </div>
+      </div>
+    </div>
+</form>
+
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Detailed Sales Summary
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Total Number</th>
+                    <th>Total Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for test, details in results.items %}
+                <tr>
+                    <td>{{test}}</td>
+                    <td>{{details|first}}</td>
+                    <td>{{details|last}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

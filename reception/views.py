@@ -5,13 +5,22 @@ from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.core.exceptions import PermissionDenied
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.decorators import method_decorator
 
-from customuser.models import CustomUser
+from .forms import CreateReceptionistForm
 from patients.models import Patient
 from patients.forms import AddPatientForm, EditPatientInfoForm
-from .forms import CreateReceptionistForm
+from .decorators import (
+    redirect_to_appropriate_view,
+    allow_receptionist_only,
+    allow_manager_and_receptionist_only,
+)
+
+
+@redirect_to_appropriate_view
+def homepage(request):
+    return render(request, "reception/home.html")
 
 
 def create_receptionist(request):
@@ -34,60 +43,55 @@ def create_receptionist(request):
 
 
 @login_required(login_url="login")
+@allow_receptionist_only
 def dashboard(request):
     """
     Get all the patients that were added to the database on a particular
     day and were entered by the currently logged in receptionist.
     """
-    if request.user.is_worker:
-        today = datetime.date.today().isoformat()
-        if request.user.is_superuser:
-            patients = Patient.objects.filter(date_added=today)
-        else:
-            patients = Patient.objects.filter(date_added=today, receptionist=request.user)
-        context = {"patients": patients}
-        return render(request, "reception/dashboard.html", context)
-    raise PermissionDenied
+    # if request.user.is_worker:
+    today = datetime.date.today().isoformat()
+    #     if request.user.is_superuser:
+    patients = Patient.objects.filter(date_added=today)
+    #     else:
+    #         patients = Patient.objects.filter(
+    #             date_added=today, receptionist=request.user
+    #         )
+    context = {"patients": patients}
+    return render(request, "reception/dashboard.html", context)
 
 
-@login_required(login_url="login")
-def add_patient(request):
+class ReceptionHomeView(LoginRequiredMixin, View):
+
+    @method_decorator(allow_receptionist_only)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ReceptionHomeView, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        form = AddPatientForm()
+        return render(request, "reception/home.html", {"form": form})
+
+    def post(self, request):
+        form = AddPatientForm(request.POST)
+        if form.is_valid():
+            form.save(commit=False)
+            # set the receptionist to the currently logged in user.
+            form.instance.receptionist = request.user
+            form.save()
+            form.save_m2m()
+            messages.success(request, "Success")
+            return redirect("reception_home")
+
+
+class PatientDetailAndEditView(LoginRequiredMixin, View):
     """
-    Add a new patient to the Patient model.
-    Only users with is_worker set to True can be able to add the patients.
-    """
-    form = AddPatientForm()
-    if request.method == "POST":
-        # if the requested user has a permission of a worker,
-        # permit the user to add a patient to the database otherwise return
-        # a 403 httpresponse(Permission Denied)
-        if request.user.is_worker:
-            form = AddPatientForm(request.POST)
-            if form.is_valid():
-                form.save(commit=False)
-                # set the receptionist to the currently logged in user
-                # before saving.
-                form.instance.receptionist = request.user
-                form.save()
-                messages.success(request, "Success")
-                return redirect("reception_home")
-        raise PermissionDenied
-    return render(request, "reception/home.html", {"form": form})
-
-
-class PatientDetailAndEditView(LoginRequiredMixin, UserPassesTestMixin, View):
-    """
-    Handle viewing patients details on the detail page and also 
+    Handle viewing patients details on the detail page and also
     saving edited patients details.
     """
-    def test_func(self):
-        # if True is returned, proceed to allow the user to access
-        # the views, otherwise raise a 403 response(Permission Denied)
-        user = CustomUser.objects.get(email=self.request.user.email)
-        if user.is_worker:
-            return True
-        else:
-            return False
+
+    @method_decorator(allow_receptionist_only)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ReceptionHomeView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, pk):
         """
@@ -114,6 +118,7 @@ class PatientDetailAndEditView(LoginRequiredMixin, UserPassesTestMixin, View):
 
 
 @require_http_methods(["GET"])
+@allow_manager_and_receptionist_only
 def search_for_patient(request):
     """
     Search for users from the database using their names and

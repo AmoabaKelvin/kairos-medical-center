@@ -7,6 +7,10 @@ from django.contrib.auth.base_user import BaseUserManager
 
 class CustomUserManager(BaseUserManager):
     def _create_user(self, username, email, password, **kwargs):
+        """
+        Create a user with the given username, email, password and 
+        other fields.
+        """
         if not email:
             raise ValueError("Email cannot be empty.")
         email = self.normalize_email(email)
@@ -42,3 +46,15 @@ class CustomUser(AbstractUser):
 
     def __str__(self) -> str:
         return f"{self.username}, {self.email}"
+
+    def is_receptionist(self):
+        """
+        Check if a user is a receptionist.
+        """
+        return self.groups.filter(name="reception").exists()
+    
+    def is_manager(self):
+        """
+        Check if a user is a manager.
+        """
+        return self.groups.filter(name="manager").exists()

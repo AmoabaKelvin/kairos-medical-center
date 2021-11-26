@@ -1,0 +1,23 @@
+{% extends 'reception/base.html' %}
+
+{% block content %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="table-success">
+            <tr>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-center">Price &#162</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for i in test %}
+                    <tr>
+                        <td>{{i.name}}</td>
+                        <td>{{i.price}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
+    
