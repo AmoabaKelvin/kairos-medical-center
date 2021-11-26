@@ -17,7 +17,7 @@ from .decorators import (
     allow_manager_and_receptionist_only,
 )
 
-
+@login_required(login_url="login")
 @redirect_to_appropriate_view
 def homepage(request):
     return render(request, "reception/home.html")
