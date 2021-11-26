@@ -43,7 +43,7 @@ def create_receptionist(request):
 
 
 @login_required(login_url="login")
-@allow_receptionist_only
+@allow_manager_and_receptionist_only
 def dashboard(request):
     """
     Get all the patients that were added to the database on a particular
@@ -63,7 +63,7 @@ def dashboard(request):
 
 class ReceptionHomeView(LoginRequiredMixin, View):
 
-    @method_decorator(allow_receptionist_only)
+    @method_decorator(allow_manager_and_receptionist_only)
     def dispatch(self, request, *args, **kwargs):
         return super(ReceptionHomeView, self).dispatch(request, *args, **kwargs)
 
@@ -89,7 +89,7 @@ class PatientDetailAndEditView(LoginRequiredMixin, View):
     saving edited patients details.
     """
 
-    @method_decorator(allow_receptionist_only)
+    @method_decorator(allow_manager_and_receptionist_only)
     def dispatch(self, request, *args, **kwargs):
         return super(ReceptionHomeView, self).dispatch(request, *args, **kwargs)
 
