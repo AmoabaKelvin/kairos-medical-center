@@ -53,9 +53,10 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.cache.UpdateCacheMiddleware',
+    'whitenoise.middleware.WhitenoiseMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -136,23 +137,24 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# CACHES = {
-#     'default':{
-#         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-#         "LOCATION": "kairos_medical_services_cache",
-#         "TIMEOUT": 300,
-#         "OPTIONS": {
-#             "MAX_ENTRIES": 1000,
-#             "CULL_FREQUENCY": 3,
-#         }
-#     },
-# }
+CACHES = {
+    'default':{
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "kairos_medical_services_cache",
+        "TIMEOUT": 300,
+        "OPTIONS": {
+            "MAX_ENTRIES": 1000,
+            "CULL_FREQUENCY": 3,
+        }
+    },
+}
 
 
 # user defined fields here.
