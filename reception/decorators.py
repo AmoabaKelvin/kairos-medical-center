@@ -36,7 +36,6 @@ def allow_manager_and_receptionist_only(view_function):
     def wrapper(request, *args, **kwargs):
         has_group = request.user.groups.exists()
         allowed = [i.name for i in request.user.groups.all()]
-        print(allowed)
         if has_group and "manager" or "reception" in allowed:
             return view_function(request, *args, **kwargs)
         else:
