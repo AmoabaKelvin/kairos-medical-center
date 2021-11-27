@@ -25,7 +25,6 @@ class LabTestsListView(ListView):
 
 
 @method_decorator(allow_manager_only, name="dispatch")
-@method_decorator(cache_page(30 * 60), name="dispatch")
 class AddTestView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = LabTests
     fields = ["name", "price"]
