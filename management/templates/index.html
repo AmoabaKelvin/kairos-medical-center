@@ -5,14 +5,28 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Management|Kairos Medical Services</title>
+        <meta name="description" content="Kairos Medical Services Tamale" />
+        <meta name="author" content="Kairos Medical Services Tamale" />
+        <title>Management | Kairos Medical Services</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+
+        <!-- google fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <!-- end google fonts -->
+
     </head>
     <body class="sb-nav-fixed">
+
+        <style>
+            * {
+              font-family: 'Montserrat', sans-serif;
+            }
+        </style>
+
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.html">Management</a>
@@ -21,7 +35,7 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="{% url 'search_view' %}" method="GET">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" name="user-search"/>
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for patient" aria-describedby="btnNavbarSearch" name="user-search"/>
                     <button class="btn btn-primary" id="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
@@ -31,7 +45,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{% url 'register' %}">Add New Worker</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <!-- <li><a class="dropdown-item" href="#!">Activity Log</a></li> -->
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                     </ul>
@@ -92,12 +106,12 @@
                                     </div>
                                 </nav>
                             </div>
-                            <!-- <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
+                            <div class="sb-sidenav-menu-heading">GOTO</div>
+                            <a class="nav-link" href="{% url 'reception_home' %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-link"></i></div>
+                                Reception
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <!-- <a class="nav-link" href="tables.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
                             </a> -->
@@ -196,10 +210,9 @@
                                 {% block table_title %} Current Sales Summary {%endblock table_title%}
                             </div>
                             <div class="card-body">
-                                <table id="datatablesSimple">
+                                <table id="datatablesSimple" class="table cell-border">
                                     <thead>
                                         <tr>
-                                            
                                             {% block table_headers %}                                                
                                             <th>Name</th>
                                             <th>Total Number</th>
@@ -210,15 +223,13 @@
                                     <tbody>
                                         
                                         {% block table_content %}
-                                        
-                                            
-                                        {% for test, details in results.items %}
-                                        <tr>
-                                            <td>{{test}}</td>
-                                            <td>{{details|first}}</td>
-                                            <td>{{details|last}}</td>
-                                        </tr>
-                                        {% endfor %}
+                                            {% for test, details in results.items %}
+                                                <tr>
+                                                    <td>{{test}}</td>
+                                                    <td>{{details|first}}</td>
+                                                    <td>{{details|last}}</td>
+                                                </tr>
+                                            {% endfor %}
                                         {% endblock table_content %}
                                     </tbody>
                                 </table>
@@ -247,6 +258,6 @@
         <!-- <script src="{% static 'assets/demo/chart-area-demo.js' %}"></script> -->
         <!-- <script src="{% static 'assets/demo/chart-bar-demo.js' %}"></script> -->
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
+        <script src="{% static 'js/datatablecustom.js' %}"></script>
     </body>
 </html>
