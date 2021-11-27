@@ -45,7 +45,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self) -> str:
-        return f"{self.username}, {self.email}"
+        return f"{self.username}"
 
     def is_receptionist(self):
         """
