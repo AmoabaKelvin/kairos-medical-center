@@ -11,8 +11,11 @@ class LabTests(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=1000)
     date_added = models.DateTimeField(auto_now_add=timezone.now)
 
+    class Meta:
+        ordering = ["name"]
+
     def __str__(self):
-        return f"{self.name}-{self.price}"
+        return f"{self.name}"
     
     @staticmethod
     def get_price(test_name):
