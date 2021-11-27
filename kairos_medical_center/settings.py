@@ -54,9 +54,9 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -147,17 +147,17 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CACHES = {
-    'default':{
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "kairos_medical_services_cache",
-        "TIMEOUT": 300,
-        "OPTIONS": {
-            "MAX_ENTRIES": 1000,
-            "CULL_FREQUENCY": 3,
-        }
-    },
-}
+# CACHES = {
+#     'default':{
+#         "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+#         "LOCATION": "kairos_medical_services_cache",
+#         "TIMEOUT": 300,
+#         "OPTIONS": {
+#             "MAX_ENTRIES": 1000,
+#             "CULL_FREQUENCY": 3,
+#         }
+#     },
+# }
 
 
 # user defined fields here.
