@@ -13,32 +13,33 @@
 {% endfor %}
 {% endif %}
     
-
-<table class="table table-bordered">
-    <h1 style="text-align: center;">Patient Information</h1>
-    <thead class="table-success">
-    <tr>
-        <th scope="col" class="text-center">Name</th>
-        <th scope="col" class="text-center">Age</th>
-        <th scope="col" class="text-center">Contact</th>
-        <th scope="col" class="text-center">Email</th>
-        <th scope="col" class="text-center">Date Added</th>
-        <!--<th scope="col" class="text-center">Actions</th>-->
-    </tr>
-    </thead>
-    <tbody>
-            <tr class="text-center">
-                <td>{{patient.patients_name}}</td>
-                <td>{{patient.patients_age}}</td>
-                <!--Added a leading zero since the numbers dont start with a zero-->
-                <td>{{patient.patients_contact}}</td>
-                <td>{{patient.email_address}}</td>
-                <td>{{patient.date_added}}</td>
-                
-            </tr>      
-    
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <h1 style="text-align: center;">Patient Information</h1>
+        <thead class="table-success">
+        <tr>
+            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center">Age</th>
+            <th scope="col" class="text-center">Contact</th>
+            <th scope="col" class="text-center">Email</th>
+            <th scope="col" class="text-center">Date Added</th>
+            <!--<th scope="col" class="text-center">Actions</th>-->
+        </tr>
+        </thead>
+        <tbody>
+                <tr class="text-center">
+                    <td>{{patient.patients_name}}</td>
+                    <td>{{patient.patients_age}}</td>
+                    <!--Added a leading zero since the numbers dont start with a zero-->
+                    <td>{{patient.patients_contact}}</td>
+                    <td>{{patient.email_address}}</td>
+                    <td>{{patient.date_added}}</td>
+                    
+                </tr>      
+        
+        </tbody>
+    </table>
+</div>
 <br>
 <!-- Edit patient information form starts here. -->
 <div class="container">
