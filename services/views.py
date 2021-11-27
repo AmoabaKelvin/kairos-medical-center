@@ -3,7 +3,7 @@ from django.views.generic import CreateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.decorators import method_decorator
-
+from django.views.decorators.cache import cache_page
 from .models import LabTests
 from utils.decorators import allow_manager_only
 
@@ -18,12 +18,14 @@ def search_for_test(request):
     return render(request, "services/search.html", {"test": test})
 
 
+@method_decorator(cache_page(30 * 60), name="dispatch")
 class LabTestsListView(ListView):
     model = LabTests
     template_name = "services/listtests.html"
 
 
 @method_decorator(allow_manager_only, name="dispatch")
+@method_decorator(cache_page(30 * 60), name="dispatch")
 class AddTestView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = LabTests
     fields = ["name", "price"]
