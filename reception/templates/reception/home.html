@@ -1,33 +1,55 @@
 {% extends 'reception/base.html' %} 
 {% load crispy_forms_tags %} 
 {% load static%}
+{% load widget_tweaks %}
 
-<link rel="stylesheet" href="{% static 'custom.css' %}" />
 {% block content %} 
+
 {% if messages %} 
-{% for message in messages %}
-<div
-  class="alert alert-{{message.tags}} alert-dismissible fade show"
-  role="alert">
-  <strong>{{message}}</strong>
-    <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="Close">
-    </button>
-</div>
-{% endfor %} 
+  {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+      <strong>{{message}}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %} 
 {% endif %}
+
 <div class="container p-5 bg-dark text-white">
   <h1 style="text-align: center">Add New Patient</h1>
   <hr />
   <form method="POST">
-    {% csrf_token %} 
-    {{form|crispy}}
+    {% csrf_token %}
+
+    <label for="name">Patient's Name*</label>
+    {% render_field form.patients_name class="form-control" id="name" %}
+
+    <label for="age">Patient's Age*</label>
+    {% render_field form.patients_age class="form-control" id="age" %}
+
+    <label for="sex">Patient's Sex*</label>
+    {% render_field form.patients_sex class="form-control" id="sex"%}
+
+    <label for="contact">Patient's Contact*</label>
+    {% render_field form.patients_contact class="form-control" id="contact" type="textarea" height="100"%}
+
+    <label for="email">Patient's Email Address</label>
+    {% render_field form.email_address class="form-control" id="email"%}
+    
+    <label for="tests">Tests to carry*</label>
+    {% render_field form.tests_to_carry class="form-control" type="select" id="tests"%}
         
+    <hr>
     
     <button type="submit" class="btn btn-primary">Submit</button>
+    {% for field in form %}           
+        {% if field.errors %}                            
+        {% for error in field.errors %}
+            <div class="error-field p-5" style="text-align: center;">
+              {{error}}
+            </div>
+        {% endfor %}                                        
+        {% endif %}                                        
+    {% endfor %}
   </form>
 </div>
 
