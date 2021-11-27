@@ -27,4 +27,6 @@ class EditPatientInfoForm(forms.ModelForm):
             "patients_sex",
             "patients_contact",
             "email_address",
+            "tests_to_carry"
         ]
+        
