@@ -62,7 +62,6 @@ def dashboard(request):
 
 
 @method_decorator(allow_manager_and_receptionist_only, name="dispatch")
-@method_decorator(cache_page(20*60), name="dispatch")
 class ReceptionHomeView(LoginRequiredMixin, View):
     # @method_decorator(allow_manager_and_receptionist_only)
     # def dispatch(self, request, *args, **kwargs):
