@@ -17,6 +17,7 @@ from .decorators import (
     allow_manager_and_receptionist_only,
 )
 
+
 @login_required(login_url="login")
 @redirect_to_appropriate_view
 def homepage(request):
@@ -49,23 +50,19 @@ def dashboard(request):
     Get all the patients that were added to the database on a particular
     day and were entered by the currently logged in receptionist.
     """
-    # if request.user.is_worker:
     today = datetime.date.today().isoformat()
-    #     if request.user.is_superuser:
-    patients = Patient.objects.filter(date_added=today)
-    #     else:
-    #         patients = Patient.objects.filter(
-    #             date_added=today, receptionist=request.user
-    #         )
+    if request.user.is_manager:
+        patients = Patient.objects.filter(date_added=today)
+    else:
+        patients = Patient.objects.filter(date_added=today, receptionist=request.user)
     context = {"patients": patients}
     return render(request, "reception/dashboard.html", context)
 
 
 class ReceptionHomeView(LoginRequiredMixin, View):
-
     @method_decorator(allow_manager_and_receptionist_only)
     def dispatch(self, request, *args, **kwargs):
-        return super(ReceptionHomeView, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
         form = AddPatientForm()
@@ -89,9 +86,9 @@ class PatientDetailAndEditView(LoginRequiredMixin, View):
     saving edited patients details.
     """
 
-    # @method_decorator(allow_manager_and_receptionist_only)
-    # def dispatch(self, request, *args, **kwargs):
-    #     return super(ReceptionHomeView, self).dispatch(request, *args, **kwargs)
+    @method_decorator(allow_manager_and_receptionist_only)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, pk):
         """
