@@ -18,22 +18,21 @@
             <th scope="col" class="text-center">Contact</th>
             <th scope="col" class="text-center">Tests To Perform</th>
             <th scope="col" class="text-center">Total Cost &#162</th>
-            {% if request.user.is_superuser %}
+            {% if request.user.is_manager%}
                 <th scope="col" class="text-center">Admitted By</th>
-            {% else %}
-            <th scope="col" class="text-center">Actions</th>
             {% endif %}
+            <th scope="col" class="text-center">Actions</th>
+    
                 
         </tr>
         </thead>
         <tbody>
             
             {% for patient in patients %}
-                <tr class="text-center">
+                <tr>
                     <td>{{patient.patients_name}}</td>
                     <td>{{patient.patients_age}}</td>
                     <td>{{patient.patients_sex}}</td>
-                    <!--Added a leading zero since the numbers dont start with a zero-->
                     <td>{{patient.patients_contact}}</td>
                     
                     {% comment %}
@@ -41,7 +40,7 @@
                         model.
                     {% endcomment %}
                         
-                    <td>{{patient.list_of_tests|join:','}}</td>
+                    <td>{{patient.list_of_tests|join:', '}}</td>
                     
                     {% comment %}
                         
@@ -49,15 +48,15 @@
                         
                     <td>{{patient.get_price}}</td>
                     
-                    {% if request.user.is_superuser %}
+                    {% if request.user.is_manager %}
                         <td>{{patient.receptionist}}</td>
-                    {% else %}
+                    {% endif %}
                     <td>
                         <a href="{% url 'info' patient.id%}">
                             <button type="button" class="btn btn-secondary btn-sm">Info</button>
                         </a>
                     </td>
-                    {% endif %}
+                    
                 </tr>      
             {% endfor %}
         
