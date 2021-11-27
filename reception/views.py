@@ -1,6 +1,7 @@
 import datetime
 
 from django.views.generic.base import View
+from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
@@ -16,6 +17,7 @@ from .decorators import (
     allow_receptionist_only,
     allow_manager_and_receptionist_only,
 )
+
 
 
 @login_required(login_url="login")
@@ -59,10 +61,12 @@ def dashboard(request):
     return render(request, "reception/dashboard.html", context)
 
 
+@method_decorator(allow_manager_and_receptionist_only, name="dispatch")
+@method_decorator(cache_page(20*60), name="dispatch")
 class ReceptionHomeView(LoginRequiredMixin, View):
-    @method_decorator(allow_manager_and_receptionist_only)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+    # @method_decorator(allow_manager_and_receptionist_only)
+    # def dispatch(self, request, *args, **kwargs):
+    #     return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
         form = AddPatientForm()
