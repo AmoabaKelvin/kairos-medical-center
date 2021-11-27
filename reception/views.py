@@ -89,9 +89,9 @@ class PatientDetailAndEditView(LoginRequiredMixin, View):
     saving edited patients details.
     """
 
-    @method_decorator(allow_manager_and_receptionist_only)
-    def dispatch(self, request, *args, **kwargs):
-        return super(ReceptionHomeView, self).dispatch(request, *args, **kwargs)
+    # @method_decorator(allow_manager_and_receptionist_only)
+    # def dispatch(self, request, *args, **kwargs):
+    #     return super(ReceptionHomeView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, pk):
         """
