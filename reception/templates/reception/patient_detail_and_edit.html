@@ -1,22 +1,22 @@
 {% extends 'reception/base.html' %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
 {% block content %}
-
 
 {% if messages %}
 
 {% for message in messages %}        
-<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-    <strong>{{message}}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>    
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>    
 {% endfor %}
 {% endif %}
     
 
 <table class="table table-bordered">
     <h1 style="text-align: center;">Patient Information</h1>
-    <thead>
+    <thead class="table-success">
     <tr>
         <th scope="col" class="text-center">Name</th>
         <th scope="col" class="text-center">Age</th>
@@ -31,13 +31,7 @@
                 <td>{{patient.patients_name}}</td>
                 <td>{{patient.patients_age}}</td>
                 <!--Added a leading zero since the numbers dont start with a zero-->
-                <td>0{{patient.patients_contact}}</td>
-                
-                {% comment %}
-                    We call the list_of_tests method from the Patient 
-                    model.
-                {% endcomment %}
-                    
+                <td>{{patient.patients_contact}}</td>
                 <td>{{patient.email_address}}</td>
                 <td>{{patient.date_added}}</td>
                 
@@ -45,16 +39,41 @@
     
     </tbody>
 </table>
-
+<br>
 <!-- Edit patient information form starts here. -->
 <div class="container">
 <form method="POST">
     <h1>Update Patient Information</h1>
     {% csrf_token %}
-    {{form|crispy}} <hr>
+
+    <label for="name"><b>Patient's Name</b></label>
+    {% render_field form.patients_name class="form-control" id="name" %}
+
+    <label for="age"><b>Patient's Age</b></label>
+    {% render_field form.patients_age class="form-control" id="age" %}
+
+    <label for="sex"><b>Patient's Sex</b></label>
+    {% render_field form.patients_sex class="form-control" id="sex"%}
+
+    <label for="contact"><b>Patient's Contact</b></label>
+    {% render_field form.patients_contact class="form-control" id="contact" type="textarea" height="100"%}
+
+    <label for="email"><b>Patient's Email Address</b></label>
+    {% render_field form.email_address class="form-control" id="email"%}
+    
+    {% if request.user.is_manager %}
+    <label for="tests"><b>Tests to carry</b></label>
+    {% render_field form.tests_to_carry class="form-control" type="select" id="tests"%}
+    {% endif %}
+    <hr>
     <button type="submit" class="btn btn-danger">Update</button>    
     <hr>
+
+    
 </form>
+
 </div>
 {% endblock content %}
-    
+<script>
+
+</script>
