@@ -1,7 +1,7 @@
 {% extends 'reception/base.html' %}
 
 {% block content %}
-<br><br><br>
+<br>
 <h1 style="font-weight: bolder;text-align: center; text-decoration: underline;">Search Results</h1>
 {% if patients.count > 0 %}
     
@@ -13,10 +13,9 @@
         <th scope="col" class="text-center">Sex</th>
         <th scope="col" class="text-center">Contact</th>
         <th scope="col" class="text-center">Email</th>
-        
-        {% if request.user.is_receptionist %}
         <th scope="col" class="text-center">Actions</th>    
-        {% endif %}
+        <th scope="col" class="text-center">Date Added</th>    
+
         <!--<th scope="col" class="text-center">Actions</th>-->
     </tr>
     </thead>
@@ -29,24 +28,13 @@
                 <td>{{patient.patients_sex}}</td>
                 <!--Added a leading zero since the numbers dont start with a zero-->
                 <td>{{patient.patients_contact}}</td>
-                
-                {% comment %}
-                    We call the list_of_tests method from the Patient 
-                    model.
-                {% endcomment %}
-                    
                 <td>{{patient.email_address}}</td>
-                
-                {% if request.user.is_receptionist %}
+                <td>{{patient.date_added}}</td>
                 <td>
                     <a href="{% url 'info' patient.id%}">
                         <button type="button" class="btn btn-secondary btn-sm">Update Info</button>
                     </a>
                 </td>    
-                {% endif %}
-                    
-                
-                
             </tr>      
         {% endfor %}
     
