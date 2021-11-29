@@ -1,6 +1,6 @@
 from django import forms
 from .models import Patient
-from services.models import LabTests
+from django_select2.forms import Select2MultipleWidget
 
 
 class AddPatientForm(forms.ModelForm):
@@ -16,6 +16,11 @@ class AddPatientForm(forms.ModelForm):
             "email_address",
             "tests_to_carry",
         ]
+        widgets = {
+            # using select2multiple widget in order to enable searching
+            # for entries from the reception ui.
+            "tests_to_carry": Select2MultipleWidget()
+        }
 
 
 class EditPatientInfoForm(forms.ModelForm):
@@ -27,6 +32,6 @@ class EditPatientInfoForm(forms.ModelForm):
             "patients_sex",
             "patients_contact",
             "email_address",
-            "tests_to_carry"
+            "tests_to_carry",
         ]
-        
+        widgets = {"tests_to_carry": Select2MultipleWidget()}
