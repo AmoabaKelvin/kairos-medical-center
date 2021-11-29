@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # os.environ["DEBUG"]
+DEBUG = os.environ["DEBUG"]
 
 ALLOWED_HOSTS = ['kairos-medical-center.herokuapp.com', '127.0.0.1']
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'services',
     'management',
     "accounts",
+    'common', # includes all activities that are common to both user groups.
     # third party apps 
     'crispy_forms',
     'widget_tweaks',
@@ -172,9 +173,16 @@ LOGIN_REDIRECT_URL = 'homepage'
 LOGOUT_REDIRECT_URL = 'login'
 
 # SENDING EMAIL SETTINGS
-# EMAIL_BACKEND = ""
-# EMAIL_HOST = ""
-# EMAIL_PORT = 587
-# EMAIL_USER_TLS = True
-# EMAIL_HOST_USER = "youremailhere"
-# EMAIL_HOST_PASSWORD = "yourpasswordhere"
+# if DEBUG is True:
+#     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# else:
+if DEBUG is True:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "amoabakelvin4002@gmail.com"
+EMAIL_HOST_PASSWORD = "KELvinamoaba" 
+DEFAULT_FROM_EMAIL = "amoabakelvin4002@gmail.com"
