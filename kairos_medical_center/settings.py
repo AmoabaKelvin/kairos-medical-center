@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ["DEBUG"]
+DEBUG = False # os.environ["DEBUG"]
 
 ALLOWED_HOSTS = ['kairos-medical-center.herokuapp.com', '127.0.0.1']
 
@@ -96,8 +96,9 @@ DATABASES = {
         'PASSWORD': '123Holyghost',
         "HOST": '127.0.0.1',
         "PORT": '5432'
+        }
     }
-}
+
 if DEBUG is False:
     import dj_database_url
     prod_db  =  dj_database_url.config(conn_max_age=500)
