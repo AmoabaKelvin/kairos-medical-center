@@ -1,0 +1,38 @@
+{% extends 'reception/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+    
+
+
+<div class="container">
+    <div class="contact-card card p-5 bg-light">
+        <h1 class="text-center">Send Email</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="subject">Subject</label>
+            {% render_field form.subject class="form-control shadow-sm" id="subject"%}
+            <label for="subject">Recipient Email Address</label>
+            {% render_field form.recipient class="form-control shadow-sm" id="subject"%}
+            <label for="subject">Message</label>
+            {% render_field form.message class="form-control shadow-sm" id="subject"%}
+            <label for="subject">Attachment</label>
+            {% render_field form.attachment class="form-control shadow-sm" id="subject"%}
+            <hr>
+            <button type="submit" class="btn btn-success mx-auto">Send Mail</button>
+            
+            
+            
+                
+        </form>
+    </div>
+</div>
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <p> {{ error }} </p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+{% endblock content %}
