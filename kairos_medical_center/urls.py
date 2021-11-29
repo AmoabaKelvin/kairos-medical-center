@@ -8,5 +8,6 @@ urlpatterns = [
     path("", include("reception.urls"), name="reception"),
     path('accounts/', include('accounts.urls')),
     path('services/', include('services.urls')),
-    path('management/', include('management.urls'))
+    path('management/', include('management.urls')),
+    path('common/', include('common.urls')),
 ]
