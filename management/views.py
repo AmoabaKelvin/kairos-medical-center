@@ -4,10 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from patients.models import Patient
-# from customuser.models import CustomUser
 from customuser.models import CustomUser
-
-# from .decorators import allow_manager_only
 from utils.decorators import allow_manager_only
 
 
@@ -22,6 +19,7 @@ def days_summary(request):
     else:
         patient = Patient.get_todays_test_summary()
     context = {"results": patient}
+
     return render(request, "reception/days_summary.html", context)
 
 
@@ -42,6 +40,7 @@ def homepage(request):
         "cost": cost,
         "results": patient,
     }
+
     return render(request, "index.html", context)
 
 
@@ -50,4 +49,5 @@ def homepage(request):
 def get_current_workers(request):
     workers = CustomUser.objects.filter(is_worker=True)
     context = {"workers": workers}
+
     return render(request, "management/workers.html", context)
