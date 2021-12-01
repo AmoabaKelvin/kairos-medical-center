@@ -1,0 +1,44 @@
+{% extends 'common/base.html' %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<div class="container">
+    {% if messages %} 
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %} 
+    {% endif %}
+    <div class="card bg-light">
+        <div class="form-group p-5">
+            <h2 class="text-center">Edit Default Email</h5>
+            <form method="POST">
+                {% csrf_token %}
+                <label for="subject">Email Subject</label>
+                {% render_field form.subject class="form-control shadow-sm" id="subject" %}
+                <label for="email-message_body">Email Message</label>
+                {% render_field form.message_body class="form-control shadow-sm" id="email-message_body" %}
+                <hr>
+                <button type="submit" class='btn btn-danger'>Update</button>
+            </form>
+        </div>
+    </div>
+    
+    {% for field in form %}
+        
+        {% if field.errors %}
+            
+            {% for error in field.errors %}
+                {{error}}
+            {% endfor %}
+                
+        {% endif %}
+            
+    {% endfor %}
+        
+</div>
+{% endblock content %}
+    
