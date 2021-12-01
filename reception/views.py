@@ -1,48 +1,15 @@
 import datetime
 
 from django.views.generic.base import View
-from django.views.decorators.cache import cache_page
-from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 
-from .forms import CreateReceptionistForm
 from patients.models import Patient
 from patients.forms import AddPatientForm, EditPatientInfoForm
-from .decorators import (
-    redirect_to_appropriate_view,
-    allow_receptionist_only,
-    allow_manager_and_receptionist_only,
-)
-
-
-
-@login_required(login_url="login")
-@redirect_to_appropriate_view
-def homepage(request):
-    return render(request, "reception/home.html")
-
-
-def create_receptionist(request):
-    """
-    Add a new receptionist to the database.
-    """
-    form = CreateReceptionistForm()
-    if request.method == "POST":
-        form = CreateReceptionistForm(request.POST)
-        if form.is_valid():
-            form.save(commit=False)
-            username = form.cleaned_data.get("username")
-            # set the is_worker status to True before saving the user.
-            form.instance.is_worker = True
-            form.save()
-            messages.success(request, f"Account for {username} has been created.")
-            return redirect("reception_home")
-    context = {"form": form}
-    return render(request, "reception/create_receptionist.html", context)
+from utils.decorators import allow_manager_and_receptionist_only
 
 
 @login_required(login_url="login")
@@ -63,10 +30,6 @@ def dashboard(request):
 
 @method_decorator(allow_manager_and_receptionist_only, name="dispatch")
 class ReceptionHomeView(LoginRequiredMixin, View):
-    # @method_decorator(allow_manager_and_receptionist_only)
-    # def dispatch(self, request, *args, **kwargs):
-    #     return super().dispatch(request, *args, **kwargs)
-
     def get(self, request):
         form = AddPatientForm()
         return render(request, "reception/home.html", {"form": form})
@@ -81,6 +44,8 @@ class ReceptionHomeView(LoginRequiredMixin, View):
             form.save_m2m()
             messages.success(request, "Success")
             return redirect("reception_home")
+        else:
+            return render(request, "reception/home.html", {"form": form})
 
 
 class PatientDetailAndEditView(LoginRequiredMixin, View):
@@ -114,19 +79,6 @@ class PatientDetailAndEditView(LoginRequiredMixin, View):
             form.save()
             messages.success(request, "Patient info updated.")
             return redirect("info", pk)
-        return render(request, "reception/patient_detail_and_edit.html")
+        else:
+            return render(request, "reception/patient_detail_and_edit.html")
 
-
-@require_http_methods(["GET"])
-@allow_manager_and_receptionist_only
-def search_for_patient(request):
-    """
-    Search for users from the database using their names and
-    display their info to the template.
-    """
-    # get the search query from the form box in the html template
-    # then filter the results based on the patient's name.
-    query = request.GET["user-search"]
-    patient = Patient.objects.filter(patients_name__icontains=query)
-    context = {"patients": patient}
-    return render(request, "reception/search.html", context)
