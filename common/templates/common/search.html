@@ -1,0 +1,49 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<br>
+<h1 style="font-weight: bolder;text-align: center; text-decoration: underline;">Search Results</h1>
+{% if patients.count > 0 %}
+    
+<table class="table table-bordered">
+    <thead class="table-success">
+    <tr>
+        <th scope="col" class="text-center">Name</th>
+        <th scope="col" class="text-center">Age</th>
+        <th scope="col" class="text-center">Sex</th>
+        <th scope="col" class="text-center">Contact</th>
+        <th scope="col" class="text-center">Email</th>
+        <th scope="col" class="text-center">Actions</th>    
+        <th scope="col" class="text-center">Date Added</th>    
+
+        <!--<th scope="col" class="text-center">Actions</th>-->
+    </tr>
+    </thead>
+    <tbody>
+        
+        {% for patient in patients %}
+            <tr class="text-center">
+                <td>{{patient.patients_name}}</td>
+                <td>{{patient.patients_age}}</td>
+                <td>{{patient.patients_sex}}</td>
+                <!--Added a leading zero since the numbers dont start with a zero-->
+                <td>{{patient.patients_contact}}</td>
+                <td>{{patient.email_address}}</td>
+                <td>{{patient.date_added}}</td>
+                <td>
+                    <a href="{% url 'info' patient.id%}">
+                        <button type="button" class="btn btn-secondary btn-sm">Update Info</button>
+                    </a>
+                </td>    
+            </tr>      
+        {% endfor %}
+    
+    </tbody>
+</table>
+{% else %}
+    <h1>No Patient found.</h1>
+{% endif %}
+
+        
+{% endblock content %}
+    
