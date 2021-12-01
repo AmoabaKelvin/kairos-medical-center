@@ -29,7 +29,7 @@ def login_user(request):
 
 @allow_manager_only
 def register(request):
-    form = CreateReceptionistForm()
+    # form = CreateReceptionistForm()
     if request.method == "POST":
         form = CreateReceptionistForm(request.POST)
         if form.is_valid():
@@ -41,6 +41,8 @@ def register(request):
             username = form.cleaned_data["username"]
             messages.success(request, f"Account Created for {username}")
             return redirect("login")
+    else:
+        form = CreateReceptionistForm()
     context = {"form": form}
     return render(request, "accounts/register.html", context)
 
