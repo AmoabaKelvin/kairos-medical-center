@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'django_select2',
+    'django_celery_results',
 ]
 
 
@@ -145,6 +146,13 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# media settings
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -176,13 +184,21 @@ LOGOUT_REDIRECT_URL = 'login'
 # if DEBUG is True:
 #     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # else:
-if DEBUG is True:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-else:
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# if DEBUG is True:
+#     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# else:
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "amoabakelvin4002@gmail.com"
 EMAIL_HOST_PASSWORD = "KELvinamoaba" 
 DEFAULT_FROM_EMAIL = "amoabakelvin4002@gmail.com"
+
+
+# celery settings
+broker_url = "redis://127.0.0.1:6379"
+accept_content = ['json']
+task_serializer = 'json'
+result_serializer = 'json'
+result_backend = 'django-cache'
