@@ -17,6 +17,17 @@
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
+                        {% for field in form %}           
+                            {% if field.errors %}                            
+                                {% for error in field.errors %}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                <strong>{{error}}</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                {% endfor %}                                        
+                            {% endif %}                                        
+                        {% endfor %}
                         <div class="row justify-content-center">
                             <div class="col-lg-7">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
@@ -71,19 +82,6 @@
                                             </div>
                                         </form>
                                     </div>
-                                    
-                                    {% for field in form %}
-                                        
-                                        {% if field.errors %}
-                                            
-                                            {% for error in field.errors %}
-                                                    <h6 style="text-align: center;">{{error}}</h6>
-                                            {% endfor %}
-                                                
-                                        {% endif %}
-                                            
-                                    {% endfor %}
-                                        
                                     <div class="card-footer text-center py-3">
                                         <div class="small"><a href="{% url 'login' %}">Have an account? Go to login</a></div>
                                     </div>
