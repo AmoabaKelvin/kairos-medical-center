@@ -1,4 +1,4 @@
-{% extends 'reception/base.html' %}
+{% extends 'common/base.html' %}
 {% load widget_tweaks %}
 
 {% block content %}
@@ -6,6 +6,14 @@
 
 
 <div class="container">
+    {% if messages %} 
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %} 
+    {% endif %}
     <div class="contact-card card p-5 bg-light">
         <h1 class="text-center">Send Email</h1>
         <form method="POST" enctype="multipart/form-data">
@@ -20,13 +28,8 @@
             {% render_field form.attachment class="form-control shadow-sm" id="subject"%}
             <hr>
             <button type="submit" class="btn btn-success mx-auto">Send Mail</button>
-            
-            
-            
-                
         </form>
     </div>
-</div>
 
 {% if form.errors %}
     {% for field in form %}
@@ -36,3 +39,4 @@
     {% endfor %}
 {% endif %}
 {% endblock content %}
+</div>
