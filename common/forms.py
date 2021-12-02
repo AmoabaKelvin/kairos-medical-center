@@ -15,4 +15,4 @@ class SendEmailForm(forms.Form):
 class EditEmailDefaultValuesForm(forms.ModelForm):
     class Meta:
         model = EmailDefaultValues
-        fields = '__all__'
+        fields = "__all__"
