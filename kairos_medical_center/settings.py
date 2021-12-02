@@ -181,23 +181,18 @@ LOGIN_REDIRECT_URL = 'homepage'
 LOGOUT_REDIRECT_URL = 'login'
 
 # SENDING EMAIL SETTINGS
-# if DEBUG is True:
-#     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-# else:
-# if DEBUG is True:
-#     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-# else:
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "amoabakelvin4002@gmail.com"
-EMAIL_HOST_PASSWORD = "KELvinamoaba" 
-DEFAULT_FROM_EMAIL = "amoabakelvin4002@gmail.com"
+EMAIL_HOST_USER = os.environ['EMAIL_ADDRESS']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
+DEFAULT_FROM_EMAIL = os.environ['EMAIL_ADDRESS']
 
 
 # celery settings
-broker_url = "redis://127.0.0.1:6379"
+broker_url = os.environ['REDIS_URL']
 accept_content = ['json']
 task_serializer = 'json'
 result_serializer = 'json'
