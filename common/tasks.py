@@ -26,10 +26,7 @@ def send_mail(file_name: str, recipient: str, subject: str, message: str):
         message = EmailDefaultValues.objects.first().message_body
     to_send = EmailMessage(subject=subject, body=message, to=[recipient])
     if file_name:
-        # to_send.attach_file(default_storage.path(file_name))
-        from pathlib import Path
-        to_send.attach_file(os.path.join(Path('app/media'), file_name))
-        # to_send.attach_file(os.path.join(settings.MEDIA_ROOT, file_name))
+        to_send.attach_file(default_storage.path(file_name))
     to_send.send(fail_silently=False)
     # After sending the file as an attachment, delete it from the media folder.
 
