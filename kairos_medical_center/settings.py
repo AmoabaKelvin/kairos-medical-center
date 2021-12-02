@@ -205,3 +205,6 @@ accept_content = ['json']
 task_serializer = 'json'
 result_serializer = 'json'
 result_backend = 'django-cache'
+
+# admins setting
+ADMINS = [("KELVIN", 'kelvinamoaba@gmail.com')]
