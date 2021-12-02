@@ -5,7 +5,7 @@ from django.conf import settings
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kairos_medical_center.settings')
 
-app = Celery('kairos_medical_center', broker='redis://127.0.0.1:6379')
+app = Celery('kairos_medical_center', broker=os.environ['REDIS_URL'])
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.
