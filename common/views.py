@@ -48,7 +48,6 @@ def mail(request):
             if form.files and form.files["attachment"]:
                 attachment = form.files["attachment"]
                 attachment = default_storage.save(attachment.name, attachment)
-                mail_admins("Has it saved", default_storage.exists(attachment))
 
             send_mail.delay(attachment, recipient, subject, message)
             messages.success(request, "Message has been sent successfully.")
