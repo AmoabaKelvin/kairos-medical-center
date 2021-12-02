@@ -1,10 +1,7 @@
-import os
 from celery import shared_task
 
 from django.core.mail import EmailMessage
 from django.core.files.storage import default_storage
-from django.conf import settings
-from django.core.mail import mail_admins
 from .models import EmailDefaultValues
 
 
@@ -26,10 +23,8 @@ def send_mail(file_name: str, recipient: str, subject: str, message: str):
         message = EmailDefaultValues.objects.first().message_body
     to_send = EmailMessage(subject=subject, body=message, to=[recipient])
     if file_name:
-        mail_admins("Path", default_storage.path(file_name))
-        if default_storage.exists(file_name):
-            mail_admins("Exists", "The file exists in the folder")
         to_send.attach_file(default_storage.path(file_name))
+
     to_send.send(fail_silently=False)
     # After sending the file as an attachment, delete it from the media folder.
 
