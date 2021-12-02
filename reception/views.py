@@ -20,7 +20,7 @@ def dashboard(request):
     day and were entered by the currently logged in receptionist.
     """
     today = datetime.date.today().isoformat()
-    if request.user.is_manager:
+    if request.user.is_manager():
         patients = Patient.objects.filter(date_added=today)
     else:
         patients = Patient.objects.filter(date_added=today, receptionist=request.user)
@@ -81,4 +81,3 @@ class PatientDetailAndEditView(LoginRequiredMixin, View):
             return redirect("info", pk)
         else:
             return render(request, "reception/patient_detail_and_edit.html")
-

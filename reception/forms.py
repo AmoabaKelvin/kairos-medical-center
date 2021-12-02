@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from customuser.models import CustomUser
 
+
 class CreateReceptionistForm(UserCreationForm):
     """CreateReceptionistForm definition."""
 
@@ -22,4 +23,3 @@ class CreateReceptionistForm(UserCreationForm):
             "password1",
             "password2",
         ]
-

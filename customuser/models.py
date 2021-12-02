@@ -8,7 +8,7 @@ from django.contrib.auth.base_user import BaseUserManager
 class CustomUserManager(BaseUserManager):
     def _create_user(self, username, email, password, **kwargs):
         """
-        Create a user with the given username, email, password and 
+        Create a user with the given username, email, password and
         other fields.
         """
         if not email:
@@ -52,7 +52,7 @@ class CustomUser(AbstractUser):
         Check if a user is a receptionist.
         """
         return self.groups.filter(name="reception").exists()
-    
+
     def is_manager(self):
         """
         Check if a user is a manager.

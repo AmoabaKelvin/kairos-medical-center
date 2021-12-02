@@ -8,7 +8,10 @@ from patients.models import Patient
 from .forms import SendEmailForm, EditEmailDefaultValuesForm
 from .tasks import send_mail
 from .models import EmailDefaultValues
-from utils.decorators import redirect_to_appropriate_view, allow_manager_and_receptionist_only
+from utils.decorators import (
+    redirect_to_appropriate_view,
+    allow_manager_and_receptionist_only,
+)
 
 
 @login_required(login_url="login")
@@ -50,7 +53,7 @@ def mail(request):
             return redirect("send_mail")
     else:
         form = SendEmailForm()
-            
+
     return render(request, "common/send_mail.html", {"form": form})
 
 
