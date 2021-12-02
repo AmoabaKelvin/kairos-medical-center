@@ -3,6 +3,7 @@ from django.core.files.storage import default_storage
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
+from django.core.mail import mail_admins
 
 from patients.models import Patient
 from .forms import SendEmailForm, EditEmailDefaultValuesForm
@@ -47,6 +48,7 @@ def mail(request):
             if form.files and form.files["attachment"]:
                 attachment = form.files["attachment"]
                 attachment = default_storage.save(attachment.name, attachment)
+                mail_admins("Has it saved", default_storage.exists(attachment))
 
             send_mail.delay(attachment, recipient, subject, message)
             messages.success(request, "Message has been sent successfully.")
