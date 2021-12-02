@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
 from common.views import homepage
+from django.conf.urls import static
+from django.conf import settings
 
 urlpatterns = [
     path('', homepage, name='homepage'),
@@ -12,3 +14,4 @@ urlpatterns = [
     path('management/', include('management.urls')),
     path('common/', include('common.urls')),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
