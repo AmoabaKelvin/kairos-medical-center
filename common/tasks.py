@@ -24,6 +24,7 @@ def send_mail(file_name: str, recipient: str, subject: str, message: str):
         message = EmailDefaultValues.objects.first().message_body
     to_send = EmailMessage(subject=subject, body=message, to=[recipient])
     if file_name:
+        # fetch the file from cloudinary and pass the content into the attach
         remote_file = requests.get(default_storage.url(file_name))
         to_send.attach(file_name, remote_file.content)
 
