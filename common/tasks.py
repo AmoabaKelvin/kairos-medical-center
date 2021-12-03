@@ -26,7 +26,7 @@ def send_mail(file_name: str, recipient: str, subject: str, message: str):
     if file_name:
         # fetch the file from cloudinary and pass the content into the attach
         remote_file = requests.get(default_storage.url(file_name))
-        to_send.attach(file_name, remote_file.content)
+        to_send.attach(file_name.replace("media/"), remote_file.content)
 
     to_send.send(fail_silently=False)
     # After sending the file as an attachment, delete it from the media folder.
