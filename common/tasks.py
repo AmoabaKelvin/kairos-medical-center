@@ -1,4 +1,5 @@
 from celery import shared_task
+import requests
 
 from django.core.mail import EmailMessage
 from django.core.files.storage import default_storage
@@ -23,10 +24,10 @@ def send_mail(file_name: str, recipient: str, subject: str, message: str):
         message = EmailDefaultValues.objects.first().message_body
     to_send = EmailMessage(subject=subject, body=message, to=[recipient])
     if file_name:
-        to_send.attach_file(default_storage.path(file_name))
+        remote_file = requests.get(default_storage.url(file_name))
+        to_send.attach(file_name, remote_file.content)
 
     to_send.send(fail_silently=False)
     # After sending the file as an attachment, delete it from the media folder.
-
     if file_name:
         default_storage.delete(file_name)
