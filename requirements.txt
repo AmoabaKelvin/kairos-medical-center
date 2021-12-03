@@ -11,6 +11,7 @@ click==8.0.3
 click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.2.0
+cloudinary==1.28.0
 colorama==0.4.4
 cryptography==36.0.0
 Deprecated==1.2.13
@@ -18,12 +19,11 @@ dj-database-url==0.5.0
 Django==3.2.9
 django-appconf==1.0.5
 django-celery-results==2.2.0
+django-cloudinary-storage==0.3.0
 django-crispy-forms==1.13.0
 django-select2==7.9.0
-django-storages==1.12.3
 django-widget-tweaks==1.4.9
 dnspython==2.1.0
-dropbox==11.25.0
 flake8==4.0.1
 gevent==21.8.0
 greenlet==1.1.2
