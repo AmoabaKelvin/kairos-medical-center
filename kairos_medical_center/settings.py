@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # cloudinary storage
+    'cloudinary_storage',
+    'cloudinary',
     # project apps start from below
     'reception',
     'customuser',
@@ -149,13 +152,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # media settings
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-# default file storage settings.
-# DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-# DROPBOX_OAUTH2_TOKEN = os.environ['DROPBOX_KEY']
-
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
 
 
 # Default primary key field type
@@ -208,3 +206,8 @@ result_backend = 'django-cache'
 
 # admins setting
 ADMINS = [("KELVIN", 'kelvinamoaba@gmail.com')]
+
+# cloudinary configs
+CLOUDINARY_STORAGE = {
+    'CLOUDINARY_URL': os.environ['CLOUDINARY_URL'],
+}
