@@ -1,14 +1,14 @@
 import datetime
 
-from django.views.generic.base import View
-from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
+from django.views.generic.base import View
 
-from patients.models import Patient
 from patients.forms import AddPatientForm, EditPatientInfoForm
+from patients.models import Patient
 from utils.decorators import allow_manager_and_receptionist_only
 
 

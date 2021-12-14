@@ -1,12 +1,12 @@
-from django.shortcuts import redirect, render
-from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
+from django.shortcuts import redirect, render
 
 from reception.forms import CreateReceptionistForm
-from .decorators import allow_unauthenticated_only, allow_authenticated_only
-
 from utils.decorators import allow_manager_only
+
+from .decorators import allow_authenticated_only, allow_unauthenticated_only
 
 
 @allow_unauthenticated_only

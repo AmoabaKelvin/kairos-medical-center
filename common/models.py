@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class EmailDefaultValues(models.Model):
     """Model definition for EmailDefaultValues."""

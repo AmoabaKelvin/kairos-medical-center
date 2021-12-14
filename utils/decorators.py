@@ -1,6 +1,6 @@
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
-from django.core.exceptions import PermissionDenied
 
 
 def redirect_to_appropriate_view(function):

@@ -1,18 +1,16 @@
-from django.shortcuts import redirect, render
-from django.core.files.storage import default_storage
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import default_storage
+from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
-from django.core.mail import mail_admins
 
 from patients.models import Patient
-from .forms import SendEmailForm, EditEmailDefaultValuesForm
-from .tasks import send_mail
+from utils.decorators import (allow_manager_and_receptionist_only,
+                              redirect_to_appropriate_view)
+
+from .forms import EditEmailDefaultValuesForm, SendEmailForm
 from .models import EmailDefaultValues
-from utils.decorators import (
-    redirect_to_appropriate_view,
-    allow_manager_and_receptionist_only,
-)
+from .tasks import send_mail
 
 
 @login_required(login_url="login")
@@ -70,8 +68,6 @@ def edit_email_defaults(request):
             form.save()
             messages.success(request, "Email Defaults updated successfully")
             return redirect("update_email")
-        else:
-            form = EditEmailDefaultValuesForm(instance=instance_to_use)
     else:
         form = EditEmailDefaultValuesForm(instance=instance_to_use)
     return render(request, "common/emaildefaults_form.html", {"form": form})

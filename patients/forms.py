@@ -1,6 +1,7 @@
 from django import forms
-from .models import Patient
 from django_select2.forms import Select2MultipleWidget
+
+from .models import Patient
 
 
 class AddPatientForm(forms.ModelForm):

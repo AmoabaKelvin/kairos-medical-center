@@ -3,8 +3,8 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from patients.models import Patient
 from customuser.models import CustomUser
+from patients.models import Patient
 from utils.decorators import allow_manager_only
 
 

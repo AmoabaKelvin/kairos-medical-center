@@ -1,8 +1,8 @@
-from celery import shared_task
 import requests
-
-from django.core.mail import EmailMessage
+from celery import shared_task
 from django.core.files.storage import default_storage
+from django.core.mail import EmailMessage
+
 from .models import EmailDefaultValues
 
 

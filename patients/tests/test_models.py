@@ -1,9 +1,11 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from ..models import Patient
-from services.models import LabTests
 from customuser.models import CustomUser
+from services.models import LabTests
+
+from ..models import Patient
+
 
 class TestPatientModels(TestCase):
     def setUp(self):

@@ -1,11 +1,13 @@
-from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import CreateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from .models import LabTests
+from django.views.generic import CreateView, ListView, UpdateView
+
 from utils.decorators import allow_manager_only
+
+from .models import LabTests
 
 
 def search_for_test(request):

@@ -1,11 +1,12 @@
-from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import AnonymousUser, Group
 from django.core.exceptions import PermissionDenied
+from django.test import RequestFactory, TestCase
 
 from customuser.models import CustomUser
 from patients.models import Patient
 from reception import views
 from services.models import LabTests
+
 
 class TestReceptionViews(TestCase):
     """

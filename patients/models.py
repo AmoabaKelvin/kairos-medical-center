@@ -1,10 +1,10 @@
 import datetime
 
-from django.db import models
-from django.utils import timezone
-from django.core.validators import MaxValueValidator
 from django.conf import settings
+from django.core.validators import MaxValueValidator
+from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 from services.models import LabTests
 
@@ -12,10 +12,10 @@ validate_age = MaxValueValidator(150, "Age cannot be greater than 150")
 
 
 class Patient(models.Model):
-    gender_choices = (("Female", "Female"), ("Male", "Male"))
+    GENDER_CHOICES = (("Female", "Female"), ("Male", "Male"))
     patients_name = models.CharField(max_length=200)
     patients_age = models.PositiveIntegerField(validators=[validate_age])
-    patients_sex = models.CharField(max_length=6, choices=gender_choices)
+    patients_sex = models.CharField(max_length=6, choices=GENDER_CHOICES)
     patients_contact = models.CharField(max_length=10)
     email_address = models.EmailField(max_length=150, blank=True)
     tests_to_carry = models.ManyToManyField(LabTests)
