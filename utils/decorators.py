@@ -25,8 +25,10 @@ def redirect_to_appropriate_view(function):
 def allow_manager_only(view_function):
     def wrapper(request, *args, **kwargs):
         has_group = request.user.groups.exists()
+        if not has_group:
+            raise PermissionDenied()
         if has_group and request.user.groups.all()[0].name != "manager":
-            return HttpResponseForbidden()
+            raise PermissionDenied()
         else:
             return view_function(request, *args, **kwargs)
     return wrapper
