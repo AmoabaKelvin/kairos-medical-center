@@ -5,10 +5,11 @@ from django.shortcuts import render
 
 from customuser.models import CustomUser
 from patients.models import Patient
-from utils.decorators import allow_manager_only
+from utils.decorators import allow_manager_only, allow_manager_and_receptionist_only
 
 
 @login_required
+@allow_manager_and_receptionist_only
 def days_summary(request):
     """
     Get the Number of tests done and then compute the prices.
